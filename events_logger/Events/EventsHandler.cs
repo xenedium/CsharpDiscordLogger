@@ -263,52 +263,147 @@ namespace events_logger.Events
 
         public async Task OnRoleCreated(SocketRole createdRole)
         {
-            await Task.CompletedTask;
+            await OnRoleCreatedChannel.SendMessageAsync($"A new role ({createdRole.Name}) has been created !");
         }
 
         public async Task OnRoleDeleted(SocketRole deletedRole)
         {
-            await Task.CompletedTask;
+            await OnRoleDeletedChannel.SendMessageAsync($"A role ({deletedRole.Name}) has been deleted !");
         }
 
         public async Task OnRoleUpdated(SocketRole before, SocketRole after)
         {
-            await Task.CompletedTask;
+            var update = new string("-------------------------------\n");
+            if (before.Name != after.Name) update += $"Name from {before.Name} to {after.Name}\n";
+            else update += $"({before.Name}) was updated!\n";
+            if (before.Position != after.Position) update += $"Position from {before.Position} to {after.Position}\n";
+            if (before.Color.ToString() != after.Color.ToString())
+                update += $"Color from {before.Color.ToString()} to {after.Color.ToString()}\n";
+            if (before.Permissions.ToString() != after.Permissions.ToString())
+            {
+                if (before.Permissions.Administrator ^ after.Permissions.Administrator)
+                    update += $"Admin from {before.Permissions.Administrator} to {after.Permissions.Administrator}\n";
+                if (before.Permissions.Connect ^ after.Permissions.Connect)
+                    update += $"Connect from {before.Permissions.Connect} to {after.Permissions.Connect}\n";
+                if (before.Permissions.Speak ^ after.Permissions.Speak)
+                    update += $"Speak from {before.Permissions.Speak} to {after.Permissions.Speak}\n";
+                if (before.Permissions.Stream ^ after.Permissions.Stream)
+                    update += $"Stream from {before.Permissions.Stream} to {after.Permissions.Stream}\n";
+                if (before.Permissions.AddReactions ^ after.Permissions.AddReactions)
+                    update += $"AddReactions from {before.Permissions.AddReactions} to {after.Permissions.AddReactions}\n";
+                if (before.Permissions.AttachFiles ^ after.Permissions.AttachFiles)
+                    update += $"AttachFiles from {before.Permissions.AttachFiles} to {after.Permissions.AttachFiles}\n";
+                if (before.Permissions.BanMembers ^ after.Permissions.BanMembers)
+                    update += $"BanMembers from {before.Permissions.BanMembers} to {after.Permissions.BanMembers}\n";
+                if (before.Permissions.ChangeNickname ^ after.Permissions.ChangeNickname)
+                    update += $"ChangeNickname from {before.Permissions.ChangeNickname} to {after.Permissions.ChangeNickname}\n";
+                if (before.Permissions.DeafenMembers ^ after.Permissions.DeafenMembers)
+                    update += $"DeafenMembers from {before.Permissions.DeafenMembers} to {after.Permissions.DeafenMembers}\n";
+                if (before.Permissions.EmbedLinks ^ after.Permissions.EmbedLinks)
+                    update += $"EmbedLinks from {before.Permissions.EmbedLinks} to {after.Permissions.EmbedLinks}\n";
+                if (before.Permissions.KickMembers ^ after.Permissions.KickMembers)
+                    update += $"KickMembers from {before.Permissions.KickMembers} to {after.Permissions.KickMembers}\n";
+                if (before.Permissions.ManageChannels ^ after.Permissions.ManageChannels)
+                    update += $"ManageChannels from {before.Permissions.ManageChannels} to {after.Permissions.ManageChannels}\n";
+                if (before.Permissions.ManageEmojis ^ after.Permissions.ManageEmojis)
+                    update += $"ManageEmojis from {before.Permissions.ManageEmojis} to {after.Permissions.ManageEmojis}\n";
+                if (before.Permissions.ManageGuild ^ after.Permissions.ManageGuild)
+                    update += $"ManageGuild from {before.Permissions.ManageGuild} to {after.Permissions.ManageGuild}\n";
+                if (before.Permissions.ManageMessages ^ after.Permissions.ManageMessages)
+                    update += $"ManageMessages from {before.Permissions.ManageMessages} to {after.Permissions.ManageMessages}\n";
+                if (before.Permissions.ManageNicknames ^ after.Permissions.ManageNicknames)
+                    update += $"ManageNicknames from {before.Permissions.ManageNicknames} to {after.Permissions.ManageNicknames}\n";
+                if (before.Permissions.ManageRoles ^ after.Permissions.ManageRoles)
+                    update += $"ManageRoles from {before.Permissions.ManageRoles} to {after.Permissions.ManageRoles}\n";
+                if (before.Permissions.ManageWebhooks ^ after.Permissions.ManageWebhooks)
+                    update += $"ManageWebhooks from {before.Permissions.ManageWebhooks} to {after.Permissions.ManageWebhooks}\n";
+                if (before.Permissions.MentionEveryone ^ after.Permissions.MentionEveryone)
+                    update += $"MentionEveryone from {before.Permissions.MentionEveryone} to {after.Permissions.MentionEveryone}\n";
+                if (before.Permissions.MoveMembers ^ after.Permissions.MoveMembers)
+                    update += $"MoveMembers from {before.Permissions.MoveMembers} to {after.Permissions.MoveMembers}\n";
+                if (before.Permissions.MuteMembers ^ after.Permissions.MuteMembers)
+                    update += $"MuteMembers from {before.Permissions.MuteMembers} to {after.Permissions.MuteMembers}\n";
+                if (before.Permissions.PrioritySpeaker ^ after.Permissions.PrioritySpeaker)
+                    update += $"PrioritySpeaker from {before.Permissions.PrioritySpeaker} to {after.Permissions.PrioritySpeaker}\n";
+                if (before.Permissions.SendMessages ^ after.Permissions.SendMessages)
+                    update += $"SendMessages from {before.Permissions.SendMessages} to {after.Permissions.SendMessages}\n";
+                if (before.Permissions.ViewChannel ^ after.Permissions.ViewChannel)
+                    update += $"ViewChannel from {before.Permissions.ViewChannel} to {after.Permissions.ViewChannel}\n";
+                if (before.Permissions.CreateInstantInvite ^ after.Permissions.CreateInstantInvite)
+                    update += $"CreateInstantInvite from {before.Permissions.CreateInstantInvite} to {after.Permissions.CreateInstantInvite}\n";
+                if (before.Permissions.ReadMessageHistory ^ after.Permissions.ReadMessageHistory)
+                    update += $"ReadMessageHistory from {before.Permissions.ReadMessageHistory} to {after.Permissions.ReadMessageHistory}\n";
+                if (before.Permissions.UseExternalEmojis ^ after.Permissions.UseExternalEmojis)
+                    update += $"UseExternalEmojis from {before.Permissions.UseExternalEmojis} to {after.Permissions.UseExternalEmojis}\n";
+                if (before.Permissions.ViewAuditLog ^ after.Permissions.ViewAuditLog)
+                    update += $"ViewAuditLog from {before.Permissions.ViewAuditLog} to {after.Permissions.ViewAuditLog}\n";
+                if (before.Permissions.ViewGuildInsights ^ after.Permissions.ViewGuildInsights)
+                    update += $"ViewGuildInsights from {before.Permissions.ViewGuildInsights} to {after.Permissions.ViewGuildInsights}\n";
+                if (before.Permissions.UseVAD ^ after.Permissions.UseVAD)
+                    update += $"UseVAD from {before.Permissions.UseVAD} to {after.Permissions.UseVAD}\n";
+                if (before.Permissions.SendTTSMessages ^ after.Permissions.SendTTSMessages)
+                    update += $"SendTTSMessages from {before.Permissions.SendTTSMessages} to {after.Permissions.SendTTSMessages}\n";
+            }
+
+            await OnRoleUpdatedChannel.SendMessageAsync(update);
         }
 
         public async Task OnUserBanned(SocketUser bannedUser, SocketGuild guild)
         {
-            await Task.CompletedTask;
+            await OnUserBannedChannel.SendMessageAsync($"A user ({bannedUser}) has been banned in {guild.Name}");
         }
 
         public async Task OnUserIsTyping(SocketUser user, ISocketMessageChannel channel)
         {
-            await Task.CompletedTask;
+            await OnUserIsTypingChannel.SendMessageAsync(
+                $"{user}({user.Id}) is typing a message in {channel.Name}");
         }
 
         public async Task OnUserJoined(SocketGuildUser joinedUser)
         {
-            await Task.CompletedTask;
+            await OnUserJoinedChannel.SendMessageAsync($"A new user {joinedUser} joined");
         }
 
         public async Task OnUserLeft(SocketGuildUser leftUser)
         {
-            await Task.CompletedTask;
+            await OnUserLeftChannel.SendMessageAsync($"{leftUser}({leftUser.Id}) left the guild !");
         }
 
         public async Task OnUserUnbanned(SocketUser unbannedUser, SocketGuild guild)
         {
-            await Task.CompletedTask;
+            await OnUserUnbannedChannel.SendMessageAsync($"{unbannedUser} has been unbanned !");
         }
 
         public async Task OnUserUpdated(SocketUser before, SocketUser after)
         {
-            await Task.CompletedTask;
+            await OnUserUpdatedChannel.SendMessageAsync($"event fired ?");
         }
 
         public async Task OnUserVoiceStateUpdated(SocketUser user, SocketVoiceState before, SocketVoiceState after)
         {
-            await Task.CompletedTask;
+            var update = new string($"--------------------------------\n{user}({user.Id}):\n");
+            if (before.VoiceChannel == null)
+                update += $"Joined {after.VoiceChannel.Name}({after.VoiceChannel.Id})\n";
+            else if (after.VoiceChannel == null)
+                update += $"Left {before.VoiceChannel.Name}({before.VoiceChannel.Id})\n";
+
+            if (after.VoiceChannel != null && before.VoiceChannel != null && before.VoiceChannel.Id != after.VoiceChannel.Id)
+                update += $"Moved from {before.VoiceChannel.Name} to {after.VoiceChannel.Name}";
+            
+            if (before.IsDeafened ^ after.IsDeafened)
+                update += $"ForceDeafened from {before.IsDeafened} to {after.IsDeafened}\n";
+            if (before.IsMuted ^ after.IsMuted)
+                update += $"ForceMuted from {before.IsMuted} to {after.IsMuted}\n";
+            if (before.IsStreaming ^ after.IsStreaming)
+                update += $"Streaming from {before.IsStreaming} to {after.IsStreaming}\n";
+            if (before.IsSuppressed ^ after.IsSuppressed)
+                update += $"Suppressed from {before.IsSuppressed} to {after.IsSuppressed}\n";
+            if (before.IsSelfDeafened ^ after.IsSelfDeafened)
+                update += $"SelfDeafened from {before.IsSelfDeafened} to {after.IsSelfDeafened}\n";
+            if (before.IsSelfMuted ^ after.IsSelfMuted)
+                update += $"SelfMuted from {before.IsSelfMuted} to {after.IsSelfMuted}\n";
+
+            await OnUserVoiceStateUpdatedChannel.SendMessageAsync(update);
         }
     }
 }
